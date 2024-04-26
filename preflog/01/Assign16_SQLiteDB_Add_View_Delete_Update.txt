@@ -1,0 +1,418 @@
+Assignment 16: SQLite DataBase : To Create DB, Add, View, Delete, Update Records
+
+Layout File:
+activity_first.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="15dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:gravity="center"
+            android:text="@string/user_name"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/editName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="Enter Name"
+            android:gravity="center_vertical|center"
+            android:hint="@string/enter_name"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:gravity="center"
+            android:hint="@string/enter_pass"
+            android:text="@string/password"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/editPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center"
+            android:hint="@string/enter_password"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+            android:autofillHints="Enter Password" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="viewdata"
+            android:text="@string/view_data"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:onClick="addUser"
+            android:text="@string/add_user"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
+
+
+
+        <EditText
+            android:id="@+id/editText6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="@string/enter_name_to_delete_data"
+            android:inputType="textPersonName"
+            android:importantForAutofill="no" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="delete"
+            android:text="@string/delete"
+            android:textStyle="normal|bold" />
+
+        <EditText
+            android:id="@+id/editText3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/current_name"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:textSize="14sp"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/editText5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/new_name"
+            android:minHeight="48dp"
+            android:inputType="textPersonName"
+            android:textSize="14sp"
+            android:textStyle="bold|italic" />
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:onClick="update"
+            android:text="@string/update"
+            android:textStyle="normal|bold" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+ 
+
+
+MainActivity.java
+ 
+/*
+How to View and Locate SQLite Database in Android Studio?
+ Step 1: pen android studio project which has SQLite database connection
+ Step 2: Connect external device or emulator with android studio
+ Step 3: Search for Device File Explorer in android studio
+ Step 4: Search application package name ( data > data> package name)
+ Step 5: Download the database
+ Step 6: Download SQLite browser
+ Step 7: Search saved database file
+ Step 8: View saved data in tables
+
+ */
+
+package com.example.assign14_mysqlitedbapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+
+public class MainActivity extends AppCompatActivity {
+    EditText Name, Pass , updateold, updatenew, delete;
+    MyDbAdapter helper;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_first);
+        Name= (EditText) findViewById(R.id.editName);
+        Pass= (EditText) findViewById(R.id.editPass);
+        updateold= (EditText) findViewById(R.id.editText3);
+        updatenew= (EditText) findViewById(R.id.editText5);
+        delete = (EditText) findViewById(R.id.editText6);
+
+        helper = new MyDbAdapter(this);
+    }
+    public void addUser(View view)
+    {
+        String t1 = Name.getText().toString();
+        String t2 = Pass.getText().toString();
+        if(t1.isEmpty() || t2.isEmpty())
+        {
+            Message.message(getApplicationContext(),"Enter Both Name and Password");
+        }
+        else
+        {
+            long id = helper.insertData(t1,t2);
+            if(id<=0)
+            {
+                Message.message(getApplicationContext(),"Insertion Unsuccessful");
+                Name.setText("");
+                Pass.setText("");
+            } else
+            {
+                Message.message(getApplicationContext(),"Insertion Successful");
+                Name.setText("");
+                Pass.setText("");
+            }
+        }
+    }
+
+    public void viewdata(View view)
+    {
+        String data = helper.getData();
+        Message.message(this,data);
+    }
+
+    public void update( View view)
+    {
+        String u1 = updateold.getText().toString();
+        String u2 = updatenew.getText().toString();
+        if(u1.isEmpty() || u2.isEmpty())
+        {
+            Message.message(getApplicationContext(),"Enter Data");
+        }
+        else
+        {
+            int a= helper.updateName( u1, u2);
+            if(a<=0)
+            {
+                Message.message(getApplicationContext(),"Unsuccessful");
+                updateold.setText("");
+                updatenew.setText("");
+            } else {
+                Message.message(getApplicationContext(),"Updated");
+                updateold.setText("");
+                updatenew.setText("");
+            }
+        }
+
+    }
+    public void delete( View view)
+    {
+        String uname = delete.getText().toString();
+        if(uname.isEmpty())
+        {
+            Message.message(getApplicationContext(),"Enter Data");
+        }
+        else{
+            int a= helper.delete(uname);
+            if(a<=0)
+            {
+                Message.message(getApplicationContext(),"Unsuccessful");
+                delete.setText("");
+            }
+            else
+            {
+                Message.message(this, "DELETED");
+                delete.setText("");
+            }
+        }
+    }
+}
+
+
+MyDbAdapter.java
+
+package com.example.assign14_mysqlitedbapp;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+public class MyDbAdapter {
+    myDbHelper myhelper;
+    public MyDbAdapter(Context context)
+    {
+        myhelper = new myDbHelper(context);
+    }
+
+    public long insertData(String name, String pass)
+    {
+        SQLiteDatabase dbb = myhelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(myDbHelper.NAME, name);
+        contentValues.put(myDbHelper.MyPASSWORD, pass);
+        long id = dbb.insert(myDbHelper.TABLE_NAME, null , contentValues);
+        return id;
+    }
+
+    public String getData()
+    {
+        SQLiteDatabase db = myhelper.getWritableDatabase();
+        String[] columns = {myDbHelper.UID,myDbHelper.NAME,myDbHelper.MyPASSWORD};
+        Cursor cursor =db.query(myDbHelper.TABLE_NAME,columns,null,null,null,null,null);
+        StringBuffer buffer= new StringBuffer();
+        while (cursor.moveToNext())
+        {
+            int cid =cursor.getInt(cursor.getColumnIndex(myDbHelper.UID));
+            String name =cursor.getString(cursor.getColumnIndex(myDbHelper.NAME));
+            String  password =cursor.getString(cursor.getColumnIndex(myDbHelper.MyPASSWORD));
+            buffer.append(cid+ "   " + name + "   " + password +" \n");
+        }
+        return buffer.toString();
+    }
+
+    public  int delete(String uname)
+    {
+        SQLiteDatabase db = myhelper.getWritableDatabase();
+        String[] whereArgs ={uname};
+
+        int count =db.delete(myDbHelper.TABLE_NAME ,myDbHelper.NAME+" = ?",whereArgs);
+        return  count;
+    }
+
+    public int updateName(String oldName , String newName)
+    {
+        SQLiteDatabase db = myhelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(myDbHelper.NAME,newName);
+        String[] whereArgs= {oldName};
+        int count =db.update(myDbHelper.TABLE_NAME,contentValues, myDbHelper.NAME+" = ?",whereArgs );
+        return count;
+    }
+
+    static class myDbHelper extends SQLiteOpenHelper
+    {
+        private static final String DATABASE_NAME = "myDatabase";    // Database Name
+        private static final String TABLE_NAME = "myTable";   // Table Name
+        private static final int DATABASE_Version = 1;    // Database Version
+        private static final String UID="_id";     // Column I (Primary Key)
+        private static final String NAME = "Name";    //Column II
+        private static final String MyPASSWORD= "Password";    // Column III
+        private static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+
+                " ("+UID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+NAME+" VARCHAR(255) ,"+ MyPASSWORD+" VARCHAR(225));";
+        private static final String DROP_TABLE ="DROP TABLE IF EXISTS "+TABLE_NAME;
+        private Context context;
+
+        public myDbHelper(Context context) {
+            super(context, DATABASE_NAME, null, DATABASE_Version);
+            this.context=context;
+        }
+
+        public void onCreate(SQLiteDatabase db) {
+
+            try {
+                db.execSQL(CREATE_TABLE);
+            } catch (Exception e) {
+                Message.message(context,""+e);
+            }
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            try {
+                Message.message(context,"OnUpgrade");
+                db.execSQL(DROP_TABLE);
+                onCreate(db);
+            }catch (Exception e) {
+                Message.message(context,""+e);
+            }
+        }
+    }
+}
+ 
+
+Message.java
+
+package com.example.assign14_mysqlitedbapp;
+
+import android.content.Context;
+import android.widget.Toast;
+
+public class Message {
+    public static void message(Context context, String message) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    }
+}
+
+
+res/values folder
+
+strings.xml
+
+<resources>
+    <string name="app_name">Assign14_MySQLiteDBApp</string>
+    <string name="update">UPDATE</string>
+    <string name="enter_name_to_delete_data">Enter Name to Delete Data</string>
+    <string name="delete">Delete</string>
+    <string name="current_name">Current Name</string>
+    <string name="new_name">New Name</string>
+    <string name="add_user">Add User</string>
+    <string name="view_data">View Data</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_pass">Enter Password</string>
+    <string name="password">Password</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="user_name">User Name</string>
+</resources>
+
+AndroidManifest.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Assign14_MySQLiteDBApp"
+        tools:targetApi="31">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

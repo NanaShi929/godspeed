@@ -1,0 +1,198 @@
+GridView App
+
+Manifest File
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.GridviewCustomeAdapterApp"
+        tools:targetApi="31">
+        <activity android:name=".SecondActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+
+Main Activity.java
+
+package com.example.gridviewcustomeadapterapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
+
+public class MainActivity extends AppCompatActivity {
+    GridView mGridView;
+   int [] fruits = {R.drawable.fruit1,
+            R.drawable.fruit2,
+            R.drawable.fruit3,
+            R.drawable.fruit5,
+            R.drawable.fruit4,
+            R.drawable.fruit6};
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mGridView=(GridView)findViewById(R.id.gridView);
+        MyAdapterClass myAdapter= new MyAdapterClass(this,fruits);
+        mGridView.setAdapter(myAdapter);
+
+        // implement setOnItemClickListener event on GridView
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // set an Intent to Another Activity
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                intent.putExtra("image", fruits[position]); // put image data in Intent
+                startActivity(intent); // start Intent
+            }
+        });
+    }
+}
+
+
+MyAdapterClass.java
+
+package com.example.gridviewcustomeadapterapp;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+
+public class MyAdapterClass extends BaseAdapter {
+    Context context;
+    int fruits [];
+    LayoutInflater inflator;
+    public MyAdapterClass(Context applncontext, int[] imageIds)
+    {
+       this.context=applncontext;
+        this.fruits=imageIds;
+        inflator=(LayoutInflater.from(applncontext));
+    }
+    @Override
+    public int getCount() {
+        return fruits.length;
+    }
+    @Override
+    public Object getItem(int i) {
+        return null;
+    }
+    @Override
+    public long getItemId(int i) {
+        return 0;
+    }
+    @SuppressLint("ViewHolder")
+    @Override
+    public View getView(int i, View v, ViewGroup viewgroup)
+    {
+        v =inflator.inflate(R.layout.gridview_row,null );
+        ImageView img=(ImageView)v.findViewById(R.id.imageView);
+        img.setImageResource(fruits[i]);
+        return v;
+    }
+}
+
+SecondActivity.java
+
+package com.example.gridviewcustomeadapterapp;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.ImageView;
+import androidx.appcompat.app.AppCompatActivity;
+
+
+public class SecondActivity extends AppCompatActivity {
+    ImageView selectedImage;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+        selectedImage = (ImageView) findViewById(R.id.selectedImage); // init a ImageView
+        Intent intent = getIntent(); // get Intent which we set from Previous Activity
+        selectedImage.setImageResource(intent.getIntExtra("image", 0)); // get image from Intent and set it in ImageView
+    }
+}
+
+Layout Files
+
+activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
+
+    <GridView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/gridView"
+        android:footerDividersEnabled="false"
+        android:padding="1dp"
+        android:numColumns="2"/>
+</LinearLayout>
+
+
+activity_second.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.Constraints xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#fff"
+tools:context=".SecondActivity">
+
+<ImageView
+    android:id="@+id/selectedImage"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:scaleType="fitXY"
+    tools:ignore="ContentDescription" />
+</androidx.constraintlayout.widget.Constraints>
+
+gridview_row.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:padding="1dp"
+android:orientation="vertical">
+<ImageView
+    android:id="@+id/imageView"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:scaleType="fitXY"
+    android:layout_gravity="center_horizontal"
+    android:src="@drawable/fruit1" />
+</LinearLayout>
+

@@ -1,0 +1,331 @@
+activity_main.java
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="236dp"
+        android:layout_height="72dp"
+        android:gravity="end"
+        android:includeFontPadding="true"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.101" />
+
+<TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal|center_vertical"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:paddingRight="16dp">
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="clear"
+            android:text="C" />
+
+        <Button
+            android:id="@+id/div"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="div"
+            android:text="/" />
+
+        <Button
+            android:id="@+id/mul"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="mul"
+            android:text="*" />
+
+        <Button
+            android:id="@+id/bksp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="back"
+            android:text="←" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:paddingRight="16dp">
+
+        <Button
+            android:id="@+id/btnSeven"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="getNum"
+            android:tag="7"
+            android:text="7" />
+
+        <Button
+            android:id="@+id/btnEight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="getNum"
+            android:tag="8"
+            android:text="8" />
+
+        <Button
+            android:id="@+id/btnNine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="getNum"
+            android:tag="9"
+            android:text="9" />
+
+        <Button
+            android:id="@+id/minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="sub"
+            android:text="-" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:paddingRight="16dp">
+
+        <Button
+            android:id="@+id/btnFour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="getNum"
+            android:tag="4"
+            android:text="4" />
+
+        <Button
+            android:id="@+id/btnFive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="getNum"
+            android:tag="5"
+            android:text="5" />
+
+        <Button
+            android:id="@+id/btnSix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="getNum"
+            android:tag="6"
+            android:text="6" />
+
+        <Button
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="add"
+            android:text="+" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:paddingRight="16dp">
+
+        <Button
+            android:id="@+id/btnOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="getNum"
+            android:tag="1"
+            android:text="1" />
+
+        <Button
+            android:id="@+id/btnTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="getNum"
+            android:tag="2"
+            android:text="2" />
+
+        <Button
+            android:id="@+id/btnThree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="getNum"
+            android:tag="3"
+            android:text="3" />
+
+        <Button
+            android:id="@+id/alternate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:paddingRight="16dp">
+
+        <Button
+            android:id="@+id/percent"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="percent"
+            android:text="%" />
+
+        <Button
+            android:id="@+id/btnZero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="getNum"
+            android:tag="0"
+            android:text="0" />
+
+        <Button
+            android:id="@+id/btnDot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="." />
+
+        <Button
+            android:id="@+id/equals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="equals"
+            android:text="=" />
+    </TableRow>
+</TableLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+MainActivity.java
+
+package com.example.calcapp;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+public class MainActivity extends AppCompatActivity {
+    TextView resultTextView;
+    String opnd1="",opnd2="", operator="";
+    Integer result;
+    String tmp="";
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        resultTextView=findViewById(R.id.result);
+    }
+    public void clear(View view){
+        resultTextView.setText("");
+        tmp="";
+    }
+    public void percent(View view){
+        double f;
+        opnd1=resultTextView.getText().toString();
+        f=(Integer.parseInt(opnd1))/ 100.0;
+        resultTextView.setText(String.valueOf(f));
+    }
+    public void back(View view){
+        opnd1=resultTextView.getText().toString();
+        resultTextView.setText("");
+    }
+    public void getNum(View view){
+        tmp+=view.getTag().toString();
+        resultTextView.setText(tmp);
+    }
+    public void add(View view){
+        tmp="";
+        opnd1=resultTextView.getText().toString();
+        operator="+";
+        resultTextView.setText("");
+    }
+    public void sub(View view){
+        tmp="";
+        opnd1=resultTextView.getText().toString();
+        operator="-";
+        resultTextView.setText("");
+    }
+    public void mul(View view){
+        tmp="";
+        opnd1=resultTextView.getText().toString();
+        operator="*";
+        resultTextView.setText("");
+    }
+    public void div(View view){
+        try{
+            tmp="";
+            opnd1=resultTextView.getText().toString();
+            operator="/";
+            resultTextView.setText("");
+        }catch (Exception e){
+            resultTextView.setText("Invalid, cannot divide by zero");
+        }
+    }
+    public void equals(View view){
+        opnd2=resultTextView.getText().toString();
+        switch(operator){
+            case "+":{
+                result=Integer.parseInt(opnd1)+Integer.parseInt(opnd2);
+                resultTextView.setText(result.toString());
+                break;
+            }
+            case "-":{
+                result=Integer.parseInt(opnd1)-Integer.parseInt(opnd2);
+                resultTextView.setText(result.toString());
+                break;
+            }
+            case "*":{
+                result=Integer.parseInt(opnd1)*Integer.parseInt(opnd2);
+                resultTextView.setText(result.toString());
+                break;
+            }
+            case "/":{
+                try{
+                    result=Integer.parseInt(opnd1)/Integer.parseInt(opnd2);
+                    resultTextView.setText(result.toString());
+                    break;
+                }catch (Exception e){
+                    resultTextView.setText("Invalid, cannot divide by zero");
+                }
+            }
+        }
+    }
+}
+

@@ -1,0 +1,388 @@
+Assignment 15: External Storage
+
+Layout File:
+activity_main.xml
+
+ <?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_data"
+            android:textAllCaps="true"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/editText_data"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            android:autofillHints=""
+            android:hint="@string/edit_text_data"
+            android:inputType="textMultiLine"/>
+
+        <Button
+            android:id="@+id/saveButton_public"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_layout"
+            android:onClick="savePublicly"
+            android:padding="8dp"
+            android:text="@string/save_button_public"
+            android:textAllCaps="false"
+            android:textColor="@color/textColor" />
+
+        <Button
+            android:id="@+id/saveButton_private"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_layout"
+            android:onClick="savePrivately"
+            android:padding="8dp"
+            android:text="@string/save_button_private"
+            android:textAllCaps="false"
+            android:textColor="@color/textColor" />
+
+        <Button
+            android:id="@+id/viewButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_layout"
+            android:onClick="viewInformation"
+            android:padding="8dp"
+            android:text="@string/view_button"
+            android:textAllCaps="false"
+            android:textColor="@color/textColor" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+activity_view_information
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ViewInformationActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/showButton_public"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_layout"
+            android:onClick="showPublicData"
+            android:padding="8dp"
+            android:text="@string/show_button_public"
+            android:textAllCaps="false"
+            android:textColor="@color/textColor" />
+
+        <Button
+            android:id="@+id/showButton_private"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_layout"
+            android:onClick="showPrivateData"
+            android:padding="8dp"
+            android:text="@string/show_button_private"
+            android:textAllCaps="false"
+            android:textColor="@color/textColor" />
+
+        <Button
+            android:id="@+id/goBackButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:background="@drawable/button_layout"
+            android:onClick="back"
+            android:padding="8dp"
+            android:text="@string/back_button"
+            android:textAllCaps="false"
+            android:textColor="@color/textColor" />
+
+        <TextView
+            android:id="@+id/textView_get_saved_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="@string/saved_information" />
+
+        <TextView
+            android:id="@+id/textView_saved_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/text_view_saved_data"
+            android:textAllCaps="true"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+MainActivity.java
+
+package com.example.myapp_externalstorage;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+import android.Manifest;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class MainActivity extends AppCompatActivity {
+    public final int EXTERNAL_STORAGE_PERMISSION_CODE = 23;
+    EditText editText;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        editText = (EditText) findViewById(R.id.editText_data);
+    }
+
+    public void savePublicly(View view) {
+        // Requesting Permission to access External Storage
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                EXTERNAL_STORAGE_PERMISSION_CODE);
+        String editTextData = editText.getText().toString();
+
+        //storage/emulated/0/Download/TempData.txt
+
+        // getExternalStoragePublicDirectory() represents root of external storage, we are using DOWNLOADS
+        // We can use following directories: MUSIC, PODCASTS, ALARMS, RINGTONES, NOTIFICATIONS, PICTURES, MOVIES
+        File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+
+        // Storing the data in file with name as TempData.txt
+        File file = new File(folder, "TempData.txt");
+        writeTextData(file, editTextData);
+        editText.setText("");
+    }
+
+    public void savePrivately(View view) {
+        String editTextData = editText.getText().toString();
+
+        ///storage/emulated/0/Android/data/com.example.myapp_externalstorage/files/TempDir/gcq.txt
+
+        // Creating folder with name GeeksForGeeks
+        File folder = getExternalFilesDir("TempDir");
+
+        // Creating file with name gcq.txt
+        File file = new File(folder, "gcq.txt");
+        writeTextData(file, editTextData);
+        editText.setText("");
+    }
+
+    public void viewInformation(View view) {
+        // Creating an intent to start a new activity
+        Intent intent = new Intent(MainActivity.this, ViewInformationActivity.class);
+        startActivity(intent);
+    }
+
+    // writeTextData() method save the data into the file in byte format
+    // It also toast a message "Done/filepath_where_the_file_is_saved"
+    private void writeTextData(File file, String data) {
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(data.getBytes());
+            Toast.makeText(this, "Done" + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (fileOutputStream != null) {
+                try {
+                    fileOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
+
+
+ViewInformationActivity.java
+
+package com.example.myapp_externalstorage;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class ViewInformationActivity extends AppCompatActivity {
+
+    TextView textView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_view_information);
+
+        // findViewById returns a view, we need to cast it into TextView
+        textView = (TextView) findViewById(R.id.textView_get_saved_data);
+    }
+
+    public void showPublicData(View view) {
+        // Accessing the saved data from the downloads folder
+        File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+
+        // geeksData represent the file data that is saved publicly
+        File file = new File(folder, "TempData.txt");
+        String data = getdata(file);
+        if (data != null) {
+            textView.setText(data);
+        } else {
+            textView.setText("No Data Found");
+        }
+    }
+
+    public void showPrivateData(View view) {
+
+        // GeeksForGeeks represent the folder name to access privately saved data
+        File folder = getExternalFilesDir("TempDir");
+
+        // gft.txt is the file that is saved privately
+        File file = new File(folder, "gcq.txt");
+        String data = getdata(file);
+        if (data != null) {
+            textView.setText(data);
+        } else {
+            textView.setText("No Data Found");
+        }
+    }
+
+    public void back(View view) {
+        Intent intent = new Intent(ViewInformationActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    // getdata() is the method which reads the data
+    // the data that is saved in byte format in the file
+    private String getdata(File myfile) {
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(myfile);
+            int i = -1;
+            StringBuffer buffer = new StringBuffer();
+            while ((i = fileInputStream.read()) != -1) {
+                buffer.append((char) i);
+            }
+            return buffer.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+}
+
+
+res/drawable folder
+
+button_layout.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+android:shape="rectangle">
+
+    <corners
+        android:bottomLeftRadius="25dp"
+        android:bottomRightRadius="25dp"
+        android:radius="50dp"
+        android:topLeftRadius="25dp"
+        android:topRightRadius="25dp" />
+
+    <padding
+        android:bottom="0dp"
+        android:left="0dp"
+        android:right="0dp"
+        android:top="0dp" />
+
+    <size
+        android:width="64dp"
+        android:height="16dp" />
+
+    <solid android:color="@color/buttonColor" />
+
+</shape>
+
+
+res/values folder
+
+colors.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#0F9D58</color>
+    <color name="colorPrimaryDark">#16E37F</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="buttonColor">#0F9D58</color>
+    <color name="textColor">#FFFFFF</color>
+</resources>
+
+
+strings.xml
+
+<resources>
+    <string name="app_name">MyApp_ExternalStorage</string>
+    <string name="text_view_data">Enter the Text Data</string>
+    <string name="edit_text_data">Enter your information</string>
+    <string name="view_button">View Information</string>
+    <string name="save_button_public">Save Publicly</string>
+    <string name="save_button_private">Save Privately</string>
+    <string name="text_view_saved_data">Saved Text Data</string>
+    <string name="saved_information">Click to view saved information</string>
+    <string name="back_button">Go Back</string>
+    <string name="show_button_public">Public Data</string>
+    <string name="show_button_private">Private Data</string>
+</resources>

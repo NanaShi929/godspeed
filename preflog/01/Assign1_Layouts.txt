@@ -1,0 +1,195 @@
+Linear Layout
+
+activity_main.xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button 1" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button 2" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button 3" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button 1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button 2" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button 3" />
+
+    </LinearLayout>
+</LinearLayout>
+					
+ConstraintLayout
+
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Student's Name"
+        android:id="@+id/txtName"
+        android:layout_alignParentTop="true"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editName"
+
+        android:text="Enter student's Name"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/txtName"
+        android:layout_toEndOf="@+id/txtName"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Student's Age"
+        android:id="@+id/txtAge"
+
+        android:layout_below="@+id/editName"
+        android:layout_alignRight="@+id/txtName"
+        android:layout_alignEnd="@+id/txtName"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editAge"
+
+        android:text="Enter student's Name"
+        android:layout_below="@+id/editName"
+        android:layout_alignLeft="@+id/editName"
+        android:layout_alignStart="@+id/editName"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+ 
+
+
+
+		
+Table Layout
+
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="MainActivity">
+<TableRow>
+    <Button    android:id="@+id/b1" />
+    <Button    android:id="@+id/b2"/>
+    <Button  android:id="@+id/b3" />
+</TableRow>
+    <TableRow>
+        <Button   android:id="@+id/b4"/>
+        <Button   android:id="@+id/b5" />
+        <Button   android:id="@+id/b6" />
+    </TableRow>
+    <TableRow>
+        <Button   android:id="@+id/b7" />
+        <Button   android:layout_weight="1" android:id="@+id/b8" />
+        <Button   android:id="@+id/b9"/>
+    </TableRow>
+</TableLayout>
+
+
+FrameLayout
+
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    >
+    <TextView android:text="LeftTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="RightTop"
+        android:layout_gravity="top|right" />
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="CentreTop"
+        android:layout_gravity="top|center_horizontal" />
+    <TextView android:text="Left"
+        android:layout_gravity="left|center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Right"
+        android:layout_gravity="right|center_vertical" />
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Centre"
+        android:layout_gravity="center" />
+    <TextView android:text="LeftBottom"
+        android:layout_gravity="left|bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="RightBottom"
+        android:layout_gravity="right|bottom" />
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="CenterBottom"
+        android:layout_gravity="center|bottom" />
+</FrameLayout>
+
+MainActivity.java
+package com.example.demo1_layouts;
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+}
+

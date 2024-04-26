@@ -1,0 +1,91 @@
+Layout File
+sport_activity.xml
+
+ <?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="259dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="228dp"
+        android:entries="@array/sports"
+        app:layout_constraintBottom_toTopOf="@+id/sport_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_view"
+        android:layout_width="302dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="80dp"
+        android:text="Sporting Activities"
+        android:gravity="center|center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/sport_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="67dp"
+        android:onClick="onClickFindSport"
+        android:text="Select Activity"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+Activity File:
+MainActivity.java
+
+package com.example.spinner_listobjects;
+package com.example.spinnerapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+        import android.os.Bundle;
+        import android.view.View;
+        import android.widget.Spinner;
+        import android.widget.TextView;
+
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.sport_activity);    }
+
+    public void onClickFindSport(View view){
+        TextView textview=(TextView) findViewById(R.id.txt_view);
+        Spinner sport_choice=(Spinner) findViewById(R.id.spinner);
+        String sportType= String.valueOf(sport_choice.getSelectedItem());
+        textview.setText(sportType);
+    }
+}
+
+
+Strings.xml
+
+<resources>
+    <string name="app_name">SpinnerApp</string>
+    <string-array name="sports">
+        <item>Football</item>
+        <item>Basketball</item>
+        <item>Handball</item>
+        <item>Volleyball</item>
+        <item>Baseball</item>
+        <item>Kabbadi</item>
+        <item>Cricket</item>
+        <item>Tennikoit</item>
+    </string-array>
+</resources>

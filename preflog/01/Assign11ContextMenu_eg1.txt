@@ -1,0 +1,112 @@
+Assign11:ContextMenu
+
+MainActivity.java
+
+package com.example.assign11_contextmenu;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Button btn = (Button) findViewById(R.id.btnShow);
+        registerForContextMenu(btn);
+    }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+       /*
+         Directly add Menu Items
+         menu.setHeaderTitle("Context Menu:Select a Menu Option");
+         menu.add(0, v.getId(), 0, "Upload");
+         menu.add(0, v.getId(), 0, "Search");
+         menu.add(0, v.getId(), 0, "Share");
+         menu.add(0, v.getId(), 0, "Bookmark");
+         */
+
+        // OR inflate a Menu File
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_example, menu);
+        menu.setHeaderTitle("Select the Context Menu Option");
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        Toast.makeText(this, "Selected Item: " +item.getTitle(), Toast.LENGTH_SHORT).show();
+        return true;
+    }
+}
+
+Layout file:
+activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical" >
+<Button
+    android:id="@+id/btnShow"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Long press me"
+    android:layout_marginTop="200dp"
+    android:layout_marginLeft="100dp"/>
+</LinearLayout>
+
+res/menu
+
+menu_example.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/mail"
+    android:icon="@drawable/ic_launcher_foreground"
+    android:title="@string/mail" />
+<item android:id="@+id/upload"
+    android:icon="@drawable/ic_launcher_foreground"
+    android:title="@string/upload"
+    android:showAsAction="ifRoom"
+    tools:ignore="AppCompatResource" />
+<item android:id="@+id/share"
+    android:icon="@drawable/ic_launcher_foreground"
+    android:title="@string/share" />
+<item android:id="@+id/file"
+    android:title="@string/file" >
+    <!-- "file" submenu -->
+    <menu>
+        <item android:id="@+id/create_new"
+            android:title="@string/create_new" />
+        <item android:id="@+id/open"
+            android:title="@string/open" />
+    </menu>
+</item>
+</menu>
+
+res/values
+
+strings.xml
+
+<resources>
+    <string name="app_name">Assign11_ContextMenu</string>
+    <string name="mail">Send e-mail</string>
+    <string name="upload">Upload File</string>
+    <string name="share">Share Resource</string>
+    <string name="file">Create New File</string>
+    <string name="open">Open File</string>
+    <string name="create">Create Folder</string>
+    <string name="create_new">Create New Folder</string>
+</resources>
+
+
+
+

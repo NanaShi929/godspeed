@@ -1,0 +1,171 @@
+Courses.java
+
+package com.example.gridviewapp;
+
+public class Courses {
+
+    // string course_name for storing course_name
+    // and imgid for storing image id.
+    private String course_name;
+    private int imgid;
+
+    public Courses(String course_name, int imgid) {
+        this.course_name = course_name;
+        this.imgid = imgid;
+    }
+
+    public String getCourse_name() {
+        return course_name;
+    }
+
+    public void setCourse_name(String course_name) {
+        this.course_name = course_name;
+    }
+
+    public int getImgid() {
+        return imgid;
+    }
+
+    public void setImgid(int imgid) {
+        this.imgid = imgid;
+    }
+
+}
+
+
+MyAdapter.java
+
+package com.example.gridviewapp;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import java.util.ArrayList;
+
+public class MyAdapter extends ArrayAdapter<Courses> {
+
+    public MyAdapter(@NonNull Context context, ArrayList<Courses> coursesArrayList) {
+        super(context, 0, coursesArrayList);
+    }
+
+    @NonNull
+    @Override
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+        View listitemView = convertView;
+        if (listitemView == null) {
+            // Layout Inflater inflates each item to be displayed in GridView.
+            listitemView = LayoutInflater.from(getContext()).inflate(R.layout.cardview_items, parent, false);
+        }
+
+        Courses courseobj = getItem(position);
+        TextView courseTxtView = listitemView.findViewById(R.id.idTXTCourse);
+        ImageView courseImgView = listitemView.findViewById(R.id.idIMGcourse);
+
+        courseTxtView.setText(courseobj.getCourse_name());
+        courseImgView.setImageResource(courseobj.getImgid());
+        return listitemView;
+    }
+}
+
+
+MainActivity.java
+
+package com.example.gridviewapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.widget.GridView;
+import android.os.Bundle;
+import android.widget.GridView;
+import androidx.appcompat.app.AppCompatActivity;
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
+
+    GridView coursesGV;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        coursesGV = findViewById(R.id.idGridcourses);
+        ArrayList<Courses> courseArrayList = new ArrayList<Courses>();
+
+        courseArrayList.add(new Courses("Data Structures", R.drawable.logo));
+        courseArrayList.add(new Courses("OOP using JAVA", R.drawable.logo));
+        courseArrayList.add(new Courses("OOP using C++", R.drawable.logo));
+        courseArrayList.add(new Courses("Programming in Python", R.drawable.logo));
+        courseArrayList.add(new Courses("Javascript", R.drawable.logo));
+        courseArrayList.add(new Courses("Internet of Things", R.drawable.logo));
+        courseArrayList.add(new Courses("DataBase Management", R.drawable.logo));
+        courseArrayList.add(new Courses("Programming in C", R.drawable.logo));
+        courseArrayList.add(new Courses("Mobile Application Development", R.drawable.logo));
+        courseArrayList.add(new Courses("Web Application Development", R.drawable.logo));
+        courseArrayList.add(new Courses("Full Stack Web Development", R.drawable.logo));
+        courseArrayList.add(new Courses("Embedded Systems", R.drawable.logo));
+        MyAdapter adapter = new MyAdapter(this, courseArrayList);
+        coursesGV.setAdapter(adapter);
+    }
+}
+
+cardview_items.xml
+
+<?xml version="1.0" encoding="utf-8"?><!-- XML implementation of Card Layout -->
+<androidx.cardview.widget.CardView
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="120dp"
+android:layout_gravity="center"
+android:layout_margin="5dp"
+app:cardCornerRadius="5dp"
+app:cardElevation="5dp">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <ImageView
+        android:id="@+id/idIMGcourse"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/ic_launcher" />
+    <TextView
+        android:id="@+id/idTXTCourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textAlignment="center" />
+</LinearLayout>
+</androidx.cardview.widget.CardView>
+
+activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- android:numColumns=2 is the number of columns for Grid View
+         android:horizontalSpacing is the space between horizontal grid items -->
+    <GridView
+        android:id="@+id/idGridcourses"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="2"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

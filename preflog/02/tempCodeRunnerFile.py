@@ -1,0 +1,1 @@
+camera.rotation=0
