@@ -1,0 +1,185 @@
+[
+    {
+        "id": "d53864b7dc2921e2",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9a40c2d34a351269",
+        "type": "inject",
+        "z": "d53864b7dc2921e2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 280,
+        "wires": [
+            [
+                "ea21030dd9d80145"
+            ]
+        ]
+    },
+    {
+        "id": "3e406a2925e7116b",
+        "type": "ui_gauge",
+        "z": "d53864b7dc2921e2",
+        "name": "",
+        "group": "693c410d013e0c08",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "Degree C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 890,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "b80ac1f39a1c00ee",
+        "type": "ui_gauge",
+        "z": "d53864b7dc2921e2",
+        "name": "",
+        "group": "693c410d013e0c08",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 870,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "9e912a0711dea007",
+        "type": "function",
+        "z": "d53864b7dc2921e2",
+        "name": "Temperature",
+        "func": "msg.temperature=msg.temperature\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 200,
+        "wires": [
+            [
+                "3e406a2925e7116b"
+            ]
+        ]
+    },
+    {
+        "id": "8ad9d5f49f5649ef",
+        "type": "function",
+        "z": "d53864b7dc2921e2",
+        "name": "Humidity",
+        "func": "msg.payload=msg.humidity\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 400,
+        "wires": [
+            [
+                "b80ac1f39a1c00ee"
+            ]
+        ]
+    },
+    {
+        "id": "ea21030dd9d80145",
+        "type": "rpi-dht22",
+        "z": "d53864b7dc2921e2",
+        "name": "dht11",
+        "topic": "rpi-dht22",
+        "dht": "11",
+        "pintype": "0",
+        "pin": 4,
+        "x": 370,
+        "y": 320,
+        "wires": [
+            [
+                "9e912a0711dea007",
+                "8ad9d5f49f5649ef",
+                "84d1cbc627241238"
+            ]
+        ]
+    },
+    {
+        "id": "84d1cbc627241238",
+        "type": "debug",
+        "z": "d53864b7dc2921e2",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "693c410d013e0c08",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "500a7e1fe56392f0",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "500a7e1fe56392f0",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

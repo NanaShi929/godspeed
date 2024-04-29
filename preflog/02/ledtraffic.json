@@ -1,0 +1,289 @@
+[
+    {
+        "id": "2fa7cbda4807c9e2",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "locked": true,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "abe5a60524c8b256",
+        "type": "function",
+        "z": "2fa7cbda4807c9e2",
+        "name": "RED",
+        "func": "msg.payload = {'red':1, 'yellow':0, 'green':0};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 40,
+        "wires": [
+            [
+                "3820e0710f1c25f0",
+                "199274db55b3c4ee",
+                "4ef3e0794f684a61",
+                "33ef2ca92d71f571"
+            ]
+        ]
+    },
+    {
+        "id": "3820e0710f1c25f0",
+        "type": "delay",
+        "z": "2fa7cbda4807c9e2",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "4",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 260,
+        "y": 200,
+        "wires": [
+            [
+                "88e59471b26519ba"
+            ]
+        ]
+    },
+    {
+        "id": "88e59471b26519ba",
+        "type": "function",
+        "z": "2fa7cbda4807c9e2",
+        "name": "YELLOW",
+        "func": "msg.payload={'red':0, 'yellow':1, 'green':0}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 200,
+        "wires": [
+            [
+                "a39ec382fab62495",
+                "33ef2ca92d71f571",
+                "199274db55b3c4ee",
+                "4ef3e0794f684a61"
+            ]
+        ]
+    },
+    {
+        "id": "a39ec382fab62495",
+        "type": "delay",
+        "z": "2fa7cbda4807c9e2",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "4",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 300,
+        "wires": [
+            [
+                "81975e07226e3898"
+            ]
+        ]
+    },
+    {
+        "id": "81975e07226e3898",
+        "type": "function",
+        "z": "2fa7cbda4807c9e2",
+        "name": "GREEN",
+        "func": "msg.payload={'red':0, 'yellow':0, 'green':1}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 300,
+        "wires": [
+            [
+                "ad183c363269f91e",
+                "4ef3e0794f684a61",
+                "199274db55b3c4ee",
+                "33ef2ca92d71f571"
+            ]
+        ]
+    },
+    {
+        "id": "ad183c363269f91e",
+        "type": "delay",
+        "z": "2fa7cbda4807c9e2",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "4",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 160,
+        "y": 460,
+        "wires": [
+            [
+                "abe5a60524c8b256"
+            ]
+        ]
+    },
+    {
+        "id": "4fb5b5b6c6b25b13",
+        "type": "inject",
+        "z": "2fa7cbda4807c9e2",
+        "name": "ON",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "str",
+        "x": 290,
+        "y": 60,
+        "wires": [
+            [
+                "abe5a60524c8b256"
+            ]
+        ]
+    },
+    {
+        "id": "19b4db02340a024a",
+        "type": "rpi-gpio out",
+        "z": "2fa7cbda4807c9e2",
+        "name": "",
+        "pin": "4",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 950,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "86016489dd11b48f",
+        "type": "rpi-gpio out",
+        "z": "2fa7cbda4807c9e2",
+        "name": "",
+        "pin": "17",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 960,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "b477e3d96064b3e7",
+        "type": "rpi-gpio out",
+        "z": "2fa7cbda4807c9e2",
+        "name": "",
+        "pin": "27",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 980,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "199274db55b3c4ee",
+        "type": "function",
+        "z": "2fa7cbda4807c9e2",
+        "name": "GET RED",
+        "func": "msg.payload = msg.payload.red;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 40,
+        "wires": [
+            [
+                "19b4db02340a024a"
+            ]
+        ]
+    },
+    {
+        "id": "33ef2ca92d71f571",
+        "type": "function",
+        "z": "2fa7cbda4807c9e2",
+        "name": "GET YELLOW",
+        "func": "msg.payload = msg.payload.yellow;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 200,
+        "wires": [
+            [
+                "86016489dd11b48f"
+            ]
+        ]
+    },
+    {
+        "id": "4ef3e0794f684a61",
+        "type": "function",
+        "z": "2fa7cbda4807c9e2",
+        "name": "GET GREEN",
+        "func": "msg.payload = msg.payload.green;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 300,
+        "wires": [
+            [
+                "b477e3d96064b3e7"
+            ]
+        ]
+    }
+]

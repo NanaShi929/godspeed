@@ -1,0 +1,288 @@
+[
+    {
+        "id": "34cf7c43e202ba05",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5bb1f08af98ef180",
+        "type": "inject",
+        "z": "34cf7c43e202ba05",
+        "name": "NO",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "str",
+        "x": 230,
+        "y": 60,
+        "wires": [
+            [
+                "cd99615b47e17289"
+            ]
+        ]
+    },
+    {
+        "id": "cd99615b47e17289",
+        "type": "function",
+        "z": "34cf7c43e202ba05",
+        "name": "RED",
+        "func": "msg.payload={'red':1,'yellow':0,'green':0}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 60,
+        "wires": [
+            [
+                "a6b99aa848b4ebb8",
+                "a30acce719edc2b0",
+                "81442087319db7b6",
+                "684352ecb4077194"
+            ]
+        ]
+    },
+    {
+        "id": "81442087319db7b6",
+        "type": "function",
+        "z": "34cf7c43e202ba05",
+        "name": "GET RED",
+        "func": "msg.payload=msg.payload.red;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 60,
+        "wires": [
+            [
+                "815a3ea11ccc25db"
+            ]
+        ]
+    },
+    {
+        "id": "5e6a4d09b8387f5c",
+        "type": "function",
+        "z": "34cf7c43e202ba05",
+        "name": "YELLOW",
+        "func": "msg.payload = { 'red': 0, 'yellow': 1, 'green': 0 }\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 160,
+        "wires": [
+            [
+                "81442087319db7b6",
+                "a30acce719edc2b0",
+                "a6b99aa848b4ebb8",
+                "09877c8d3eb0c655"
+            ]
+        ]
+    },
+    {
+        "id": "a6b99aa848b4ebb8",
+        "type": "function",
+        "z": "34cf7c43e202ba05",
+        "name": "GET YELLOW",
+        "func": "msg.payload = msg.payload.yellow;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 160,
+        "wires": [
+            [
+                "430af9c9aca0c805"
+            ]
+        ]
+    },
+    {
+        "id": "df2c06db879ba0a5",
+        "type": "function",
+        "z": "34cf7c43e202ba05",
+        "name": "GREEN",
+        "func": "msg.payload = { 'red': 0, 'yellow': 0, 'green': 1 }\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 260,
+        "wires": [
+            [
+                "81442087319db7b6",
+                "a6b99aa848b4ebb8",
+                "a30acce719edc2b0",
+                "9d6947508f5dca18"
+            ]
+        ]
+    },
+    {
+        "id": "a30acce719edc2b0",
+        "type": "function",
+        "z": "34cf7c43e202ba05",
+        "name": "GET GREEN",
+        "func": "msg.payload=msg.payload.green;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 260,
+        "wires": [
+            [
+                "239464f0908c1e83"
+            ]
+        ]
+    },
+    {
+        "id": "684352ecb4077194",
+        "type": "delay",
+        "z": "34cf7c43e202ba05",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 160,
+        "wires": [
+            [
+                "5e6a4d09b8387f5c"
+            ]
+        ]
+    },
+    {
+        "id": "09877c8d3eb0c655",
+        "type": "delay",
+        "z": "34cf7c43e202ba05",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "4",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 260,
+        "wires": [
+            [
+                "df2c06db879ba0a5"
+            ]
+        ]
+    },
+    {
+        "id": "9d6947508f5dca18",
+        "type": "delay",
+        "z": "34cf7c43e202ba05",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 360,
+        "wires": [
+            [
+                "cd99615b47e17289"
+            ]
+        ]
+    },
+    {
+        "id": "815a3ea11ccc25db",
+        "type": "rpi-gpio out",
+        "z": "34cf7c43e202ba05",
+        "name": "",
+        "pin": "4",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 1010,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "430af9c9aca0c805",
+        "type": "rpi-gpio out",
+        "z": "34cf7c43e202ba05",
+        "name": "",
+        "pin": "17",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 1020,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "239464f0908c1e83",
+        "type": "rpi-gpio out",
+        "z": "34cf7c43e202ba05",
+        "name": "",
+        "pin": "27",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 1020,
+        "y": 260,
+        "wires": []
+    }
+]

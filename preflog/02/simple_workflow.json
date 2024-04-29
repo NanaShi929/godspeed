@@ -1,0 +1,76 @@
+[
+    {
+        "id": "d548917296721e14",
+        "type": "tab",
+        "label": "Flow 4",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "58ffae9d.a7005",
+        "type": "debug",
+        "z": "d548917296721e14",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "17626462.e89d9c",
+        "type": "inject",
+        "z": "d548917296721e14",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 180,
+        "wires": [
+            [
+                "2921667d.d6de9a"
+            ]
+        ]
+    },
+    {
+        "id": "2921667d.d6de9a",
+        "type": "function",
+        "z": "d548917296721e14",
+        "name": "Format timestamp",
+        "func": "msg.payload=new Date(msg.payload).toISOString();\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 180,
+        "wires": [
+            [
+                "58ffae9d.a7005"
+            ]
+        ]
+    }
+]
