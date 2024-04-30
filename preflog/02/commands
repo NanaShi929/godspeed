@@ -1,0 +1,6 @@
+to configure raspberry pi and unable components:- 
+raspi-config 
+
+to get ip address:- ifconfig
+
+to start node red:- node-red
