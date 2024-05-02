@@ -1,0 +1,221 @@
+//1-Creating a db ' stu2004 with collection named 'Students
+var mong=require('mongodb').MongoClient
+var url="mongodb://127.0.0.1:27017/Stu2004"
+mong.connect(url,function(err,db){
+    if(err) throw err
+    console.log("db created")
+    var dbo=db.db("Stu2004")
+    dbo.createCollection("Students",function(err,res){
+        if(err) throw err
+        console.log("collection created")
+        db.close
+    })
+})
+
+
+
+//2- Insert one document into students using id object
+var mong=require('mongodb').MongoClient
+var url="mongodb://127.0.0.1:27017/"
+mong.connect(url,function(err,db){
+    if(err) throw err
+    console.log("db created")
+    var dbo=db.db("Stu2004")
+    var row={rollno:"123",sname:"Jim",address:"Xeldem Quepem Goa"}
+    dbo.collection("Students").insertOne(row,function(err,res){
+        if(err) throw err
+        console.log("document inserted with id" + res.insertedId)
+        db.close()
+    })
+
+})
+
+
+ //4- Insert multiple documents into students using user id object
+var mong=require('mongodb').MongoClient
+var url="mongodb://127.0.0.1:27017/"
+mong.connect(url,function(err,db){
+    if(err) throw err
+    console.log("db created")
+    var dbo=db.db("Stu2004")
+    var rows=[
+        {_id:"1134" ,rollno:"124",sname:"James",address:"Cusmane Quepem Goa"},
+        {_id:"1235" ,rollno:"125",sname:"john",address:"Tilamol   Goa"},
+        {_id:"1136" ,rollno:"126",sname:"Ansar",address:"Igramoll Quepem Goa"},
+    ]
+    dbo.collection("Students").insertMany(rows,function(err,res){
+        if(err) throw err
+        console.log("document inserted with id" + res.insertedCount)
+        db.close()
+    })
+
+})
+
+
+//5- findOne Method to return the first document
+
+var mong=require('mongodb').MongoClient
+var url="mongodb://127.0.0.1:27017/"
+mong.connect(url,function(err,db){
+    if(err) throw err
+    var dbo=db.db("Stu2004")
+    dbo.collection("Students").findOne(function(err,res){
+        if(err) throw err
+        console.log( res)
+        db.close()
+    })
+})
+
+
+//6- find method without any arguments to return all the documents
+var mong=require('mongodb').MongoClient
+var url="mongodb://127.0.0.1:27017/"
+mong.connect(url,function(err,db){
+    if(err) throw err
+    var dbo=db.db("Stu2004")
+    dbo.collection("Students").find().toArray(function(err,res){
+        if(err) throw err
+        console.log( res)
+        db.close()
+    })
+})
+
+
+//7- find with the projection object to return all the docs 
+//with sname and rollno field
+var mong=require('mongodb').MongoClient
+var url="mongodb://127.0.0.1:27017/"
+mong.connect(url,function(err,db){
+    if(err) throw err
+    var dbo=db.db("Stu2004")
+    dbo.collection("Students").find({},{projection:{_id:0,sname:1,rollno:1}}).toArray(function(err,res){
+        if(err) throw err
+        console.log( res)
+        db.close()
+    })
+})
+
+//8- find with the query (where clause) object  where address starts with t or T
+var mong=require('mongodb').MongoClient
+var url="mongodb://127.0.0.1:27017/"
+mong.connect(url,function(err,db){
+    if(err) throw err
+    var dbo=db.db("Stu2004")
+    dbo.collection("Students").find({address:{$regex: /^t/i}},{projection:{_id:0,sname:1,rollno:1,address:1}}).toArray(function(err,res){
+        if(err) throw err
+        console.log( res)
+        db.close()
+    })
+})
+
+
+//9- find with the query (where clause) object  where address has quepem or QUEPEM
+var mong=require('mongodb').MongoClient
+var url="mongodb://127.0.0.1:27017/"
+mong.connect(url,function(err,db){
+    if(err) throw err
+    var dbo=db.db("Stu2004")
+    dbo.collection("Students").find({address:{$regex: /quepem/i}},{projection:{_id:0,sname:1,rollno:1,address:1}}).toArray(function(err,res){
+        if(err) throw err
+        console.log( res)
+        db.close()
+    })
+})
+
+
+//10- usin or to combine conditions address as 
+//Tilamol(irrespective of case) or sname as 'john
+var mong=require('mongodb').MongoClient
+var url="mongodb://127.0.0.1:27017/"
+mong.connect(url,function(err,db){
+    if(err) throw err
+    var dbo=db.db("Stu2004")
+    dbo.collection("Students").find({"$or":[{address:{$regex: /quepem/i}},{sname:"john"}]},{projection:{_id:0,sname:1,rollno:1,address:1}}).toArray(function(err,res){
+        if(err) throw err
+        console.log( res)
+        db.close()
+    })
+})
+
+
+//11- using sort asc on sname  
+var mong=require('mongodb').MongoClient
+var url="mongodb://127.0.0.1:27017/"
+mong.connect(url,function(err,db){
+    if(err) throw err
+    var dbo=db.db("Stu2004")
+    dbo.collection("Students").find({"$or":[{address:{$regex: /quepem/i}},{sname:"john"}]},{projection:{_id:0,sname:1,rollno:1,address:1}}).sort({sname:1}).toArray(function(err,res){
+        if(err) throw err
+        console.log( res)
+        db.close()
+    })
+})
+
+
+//12- using sort desc on sname  
+var mong=require('mongodb').MongoClient
+var url="mongodb://127.0.0.1:27017/"
+mong.connect(url,function(err,db){
+    if(err) throw err
+    var dbo=db.db("Stu2004")
+    dbo.collection("Students").find({"$or":[{address:{$regex: /quepem/i}},{sname:"john"}]},{projection:{_id:0,sname:1,rollno:1,address:1}}).sort({sname:-1}).toArray(function(err,res){
+        if(err) throw err
+        console.log( res)
+        db.close()
+    })
+})
+
+
+//13.deleteMany - delete all docs with address as 
+//Tilamol(irrespective of case) or sname as 'john
+var mong=require('mongodb').MongoClient
+var url="mongodb://127.0.0.1:27017/"
+mong.connect(url,function(err,db){
+    if(err) throw err
+    var dbo=db.db("Stu2004")
+    dbo.collection("Students").deleteMany({"$or":[{address:{$regex: /tilamol/i}},{sname:"john"}]},function(err,res){
+        if(err) throw err
+        console.log( res)
+        db.close()
+    })
+})
+
+//13.updateMany to update all the docs with rollno:124 with name changed to 'Sanjeel' 
+var mong=require('mongodb').MongoClient
+var url="mongodb://127.0.0.1:27017/"
+mong.connect(url,function(err,db){
+    if(err) throw err
+    var dbo=db.db("Stu2004")
+    dbo.collection("Students").updateMany({rollno:"124"},{$set:{sname:"Sanjeel"}},function(err,res){
+        if(err) throw err
+        console.log( res)
+        db.close()
+    })
+})
+
+//14- using limit to return specified no of docs(first 2 docs)
+var mong=require('mongodb').MongoClient
+var url="mongodb://127.0.0.1:27017/"
+mong.connect(url,function(err,db){
+    if(err) throw err
+    var dbo=db.db("Stu2004")
+    dbo.collection("Students").find({"$or":[{address:{$regex: /quepem/i}},{sname:"john"}]},{projection:{_id:0,sname:1,rollno:1,address:1}}).sort({sname:-1}).limit(2).toArray(function(err,res){
+        if(err) throw err
+        console.log( res)
+        db.close()
+    })
+})
+
+//15- drop method to drop the entire collection
+var mong=require('mongodb').MongoClient
+var url="mongodb://127.0.0.1:27017/"
+mong.connect(url,function(err,db){
+    if(err) throw err
+    var dbo=db.db("Stu2004")
+    dbo.collection("Students").drop(function(err,del){
+        if(err) throw err
+        if (del) console.log( "collection dropped")
+        db.close()
+    })
+})
+
