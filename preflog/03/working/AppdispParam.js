@@ -9,7 +9,7 @@ export class Disp extends React.Component{
     }						
     componentDidMount(){							
         let dep=prompt('enter dept') 
-        axios.get("http://127.0.0.1:4000/fetchrecsparam",
+        axios.get("http://127.0.0.1:5000/fetchrecsparam",
         {params:{dept:dep}}).then(res=>{this.setState({dat:res.data})})
          .catch(err=>console.log(err))
     }
