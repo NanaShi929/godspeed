@@ -1,27 +1,4 @@
-// #include <stdio.h>
-// int main() {
-// int i, f;
-// char pop[100], c;
-// printf("Enter a plaintext: \n");
-// fgets(pop, sizeof(pop), stdin);
-// printf("Enter key: ");
-// scanf("%d", &f);
-// for (i = 0; pop[i] != '\0'; i++) {
-// c = pop[i];
-// if (c >= 'a' && c <= 'z') {
-// c = c -f;//"-" for decryption
-// // Handle wrapping around for lowercase letters
-// c = (c - 'a') % 26 + 'a';
-// } else if (c >= 'A' && c <= 'Z') {
-// c = c - f; //"-" for decryption
-// // Handle wrapping around for uppercase letters
-// c = (c - 'A') % 26 + 'A';
-// }
-// pop[i] = c;
-// }
-// printf("Encrypted message: %s", pop);
-// return 0;
-// }
+
 #include<stdio.h>
 
 #include<ctype.h>
