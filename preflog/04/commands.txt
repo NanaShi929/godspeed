@@ -1,0 +1,10 @@
+dos:- copy /b image.jpg + document.zip
+
+
+openssl:-1)openssl version -a
+         2)openssl genrsa -out assym_key1.key 2048
+         3)openssl aes-256-cbc -in document.txt -out document.enc -e -kfile assym_key1.key
+         4)openssl aes-256-cbc -in document.enc -out document.dec -d -kfile assym_key1.key
+         5)openssl req -new -key qwerty.key -out qwerty.csr 
+         6)openssl req -text -in qwerty.csr -noout -verify
+         7)openssl x509 -in qwerty.csr -out qwerty.crt -req -signkey qwerty.key -days 365
