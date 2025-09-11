@@ -1,0 +1,4 @@
+name,gender,location,salary
+vaibhav,male,vasco,25000
+bhargav,male,margoa,50000
+eugi,female,bgm,40000 

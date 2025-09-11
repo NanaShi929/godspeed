@@ -1,0 +1,8 @@
+name,location,gender,age
+ranjita,female,mumbai,50000
+Deepa,female,rajasthan,60000
+rajani,female,rajasthan,45000
+rima,female,pune,60000
+dinesh,male,goa,30000
+mohan,male,mumbai,40000
+nothing,male,goa,35000
